@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LicenseGrid - Central Inventory</title>
+  <link rel="stylesheet" href="Project.css">
+</head>
+<body>
+
+
+
+
+
+
+  <!-- ==================== 1. AUTH / LOGIN VIEW ==================== -->
+  <div id="login-view" class="login-container">
+    <div class="login-card">
+      <div class="brand-header">
+        <h1>LicenseGrid</h1>
+        <p id="form-subtitle">Software license and seat allocation manager.</p>
+      </div>
+
+      <form id="auth-form">
+        <div class="form-group" id="name-group" style="display: none;">
+          <label for="user-name">Full Name</label>
+          <input type="text" id="user-name" placeholder="John Doe">
+        </div>
+
+        <div class="form-group">
+          <label for="user-email">Email Address</label>
+          <input type="email" id="user-email" placeholder="admin@company.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="user-password">Password</label>
+          <input type="password" id="user-password" placeholder="••••••••" required>
+        </div>
+
+        <div id="error-message" class="error-msg"></div>
+
+        <button type="submit" id="submit-btn" class="btn-primary form-submit-btn">Sign In</button>
+      </form>
+
+      <div class="toggle-auth">
+        <span id="toggle-text">Don't have an account?</span>
+        <a href="#" id="toggle-btn">Sign Up</a>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==================== HERO OVERVIEW SECTION ==================== -->
+    <section class="grid-hero-section">
+      <span class="hero-tagline"></span>
+      <h2 class="hero-headline">License Grid</h2>
+      <p class="hero-subtext">
+        Every internal workspace starts with decentralized tracking. LicenseGrid establishes full 
+        operational visibility, seat usage safeguards, and financial transparency before software contracts expand.
+      </p>
+
+      <div class="hero-highlights-row">
+        <div class="highlight-chip">
+          <span class="chip-dot"></span>
+          
+        </div>
+        <div class="highlight-chip">
+          <span class="chip-dot"></span>
+          
+        </div>
+        <div class="highlight-chip">
+          <span class="chip-dot"></span>
+          
+        </div>
+      </div>
+    </section>
+
+
+
+  
+
+
+
+
+
+  <!-- ==================== 2. MAIN DASHBOARD VIEW ==================== -->
+  <main id="dashboard-view" class="dashboard-container" style="display: none;">
+    <header class="inventory-header">
+      <div>
+        <h1>LicenseGrid</h1>
+        <p>Monitor all active software tools, licenses, and costs.</p>
+      </div>
+      <div style="display: flex; gap: 1rem; align-items: center;">
+        <span id="user-display-name" style="color: var(--text-muted); font-size: 0.9rem; font-weight: 600;"></span>
+        <button id="add-tool-btn" class="btn-primary">+ Add Software</button>
+        <button id="logout-btn" class="btn-primary" style="background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.4); color: #ef4444;">Logout</button>
+      </div>
+    </header>
+
+    <!-- Software Cards Grid (Positioned First) -->
+    <div id="inventory-grid" class="inventory-grid"></div>
+
+    <!-- Analytics Banner (Positioned Below Cards) -->
+    <section class="analytics-banner" style="margin-top: 2.5rem;">
+      <div class="stat-card">
+        <span class="stat-label">Total Monthly Spend</span>
+        <h2 id="total-monthly-spend" class="stat-value">$0</h2>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Total Annual Spend</span>
+        <h2 id="total-annual-spend" class="stat-value">$0</h2>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Active Software Tools</span>
+        <h2 id="total-active-tools" class="stat-value">0</h2>
+      </div>
+    </section>
+  </main>
+
+
+  
+
+  <!-- ==================== 3. ADD SOFTWARE MODAL ==================== -->
+  <div id="modal-overlay" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>Add New Software</h2>
+        <button id="close-modal-btn" class="close-btn">&times;</button>
+      </div>
+      <form id="add-software-form">
+        <div class="form-group">
+          <label for="tool-name">Software Name</label>
+          <input type="text" id="tool-name" placeholder="e.g., Notion, Slack" required>
+        </div>
+        <div class="form-group">
+          <label for="tool-category">Category</label>
+          <input type="text" id="tool-category" placeholder="e.g., Productivity, Analytics" required>
+        </div>
+        <div class="form-group">
+          <label for="tool-cost">Monthly Cost ($)</label>
+          <input type="number" id="tool-cost" placeholder="e.g., 250" required min="0">
+        </div>
+        <div class="form-group-row">
+          <div class="form-group">
+            <label for="tool-assigned">Assigned Seats</label>
+            <input type="number" id="tool-assigned" placeholder="e.g., 10" required min="0">
+          </div>
+          <div class="form-group">
+            <label for="tool-total">Total Seats</label>
+            <input type="number" id="tool-total" placeholder="e.g., 15" required min="1">
+          </div>
+        </div>
+        <button type="submit" class="btn-primary form-submit-btn">Add to Inventory</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== 4. EDIT / MANAGE MODAL ==================== -->
+  <div id="edit-modal-overlay" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>Manage Software</h2>
+        <button id="close-edit-modal-btn" class="close-btn">&times;</button>
+      </div>
+      <form id="edit-software-form">
+        <input type="hidden" id="edit-tool-id">
+        
+        <div class="form-group">
+          <label for="edit-tool-name">Software Name</label>
+          <input type="text" id="edit-tool-name" required>
+        </div>
+        <div class="form-group">
+          <label for="edit-tool-category">Category</label>
+          <input type="text" id="edit-tool-category" required>
+        </div>
+        <div class="form-group">
+          <label for="edit-tool-cost">Monthly Cost ($)</label>
+          <input type="number" id="edit-tool-cost" required min="0">
+        </div>
+        <div class="form-group-row">
+          <div class="form-group">
+            <label for="edit-tool-assigned">Assigned Seats</label>
+            <input type="number" id="edit-tool-assigned" required min="0">
+          </div>
+          <div class="form-group">
+            <label for="edit-tool-total">Total Seats</label>
+            <input type="number" id="edit-tool-total" required min="1">
+          </div>
+        </div>
+        
+        <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+          <button type="submit" class="btn-primary" style="flex: 1;">Save Changes</button>
+          <button type="button" id="delete-tool-btn" class="btn-primary" style="background: #ef4444; border: none;">Delete</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="Project.js"></script>
+</body>
+</html>
