@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   ShieldCheck, 
   BarChart3, 
@@ -7,8 +7,10 @@ import {
   Zap, 
   DollarSign, 
   Sparkles,
-  LayoutDashboard
+  LayoutDashboard,
+  Play
 } from 'lucide-react';
+import CyberShowcase from '../components/cyber/CyberShowcase';
 
 export default function LandingPage({ user, tools, setActivePage }) {
   const totalMonthlySpend = tools.reduce((acc, t) => acc + Number(t.monthlyCost || 0), 0);
@@ -48,6 +50,27 @@ export default function LandingPage({ user, tools, setActivePage }) {
             <ArrowRight size={18} />
           </button>
 
+          <button 
+            onClick={() => {
+              const reelBtn = document.getElementById('btn-cinema-modal');
+              if (reelBtn) reelBtn.click();
+            }}
+            className="btn-secondary"
+            style={{ 
+              padding: '0.85rem 1.75rem', 
+              fontSize: '1rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              background: 'rgba(249, 115, 22, 0.12)',
+              borderColor: 'rgba(249, 115, 22, 0.45)',
+              color: '#fb923c'
+            }}
+          >
+            <Play size={16} fill="#f97316" />
+            <span>Watch 4K Sci-Fi Reel</span>
+          </button>
+
           {!user && (
             <button 
               onClick={() => setActivePage('register')} 
@@ -59,101 +82,14 @@ export default function LandingPage({ user, tools, setActivePage }) {
           )}
         </div>
 
-        {/* INTERACTIVE PREVIEW WINDOW */}
-        <div className="hero-preview-wrapper">
-          <div className="preview-window-bar">
-            <div className="window-dots">
-              <span className="window-dot red"></span>
-              <span className="window-dot yellow"></span>
-              <span className="window-dot green"></span>
-            </div>
-            <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontFamily: 'monospace' }}>
-              app.licensegrid.internal/dashboard
-            </div>
-            <button
-              onClick={() => setActivePage('dashboard')}
-              style={{
-                background: 'rgba(37, 99, 235, 0.15)',
-                border: '1px solid rgba(59, 130, 246, 0.3)',
-                color: 'var(--accent-sky)',
-                fontSize: '0.75rem',
-                padding: '0.25rem 0.65rem',
-                borderRadius: '6px',
-                cursor: 'pointer',
-                fontWeight: 600,
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.35rem'
-              }}
-            >
-              <span>Go to Interactive View</span>
-              <ArrowRight size={12} />
-            </button>
-          </div>
-
-          {/* Quick Live Preview Cards Strip */}
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: '1rem',
-            marginBottom: '1.25rem'
-          }}>
-            <div style={{ background: 'rgba(255, 255, 255, 0.03)', padding: '1rem', borderRadius: '10px', border: '1px solid var(--border-subtle)' }}>
-              <span style={{ fontSize: '0.74rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Active Tools</span>
-              <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#ffffff', marginTop: '0.2rem' }}>{tools.length} Subscriptions</div>
-              <span style={{ fontSize: '0.72rem', color: 'var(--status-emerald)' }}>All verified & compliance-ready</span>
-            </div>
-
-            <div style={{ background: 'rgba(255, 255, 255, 0.03)', padding: '1rem', borderRadius: '10px', border: '1px solid var(--border-subtle)' }}>
-              <span style={{ fontSize: '0.74rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Monthly Spend</span>
-              <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#ffffff', marginTop: '0.2rem' }}>${totalMonthlySpend.toLocaleString()}</div>
-              <span style={{ fontSize: '0.72rem', color: 'var(--accent-sky)' }}>${(totalMonthlySpend * 12).toLocaleString()} annual run rate</span>
-            </div>
-
-            <div style={{ background: 'rgba(255, 255, 255, 0.03)', padding: '1rem', borderRadius: '10px', border: '1px solid var(--border-subtle)' }}>
-              <span style={{ fontSize: '0.74rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Total Seat Capacity</span>
-              <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#ffffff', marginTop: '0.2rem' }}>{assignedSeats} / {totalSeats}</div>
-              <span style={{ fontSize: '0.72rem', color: 'var(--status-emerald)' }}>{totalSeats - assignedSeats} seats available</span>
-            </div>
-          </div>
-
-          {/* Interactive sample software rows */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            {tools.slice(0, 3).map((tool) => {
-              const assigned = tool.assignments ? tool.assignments.length : (tool.assignedSeats || 0);
-              const percent = Math.min(100, Math.round((assigned / tool.totalSeats) * 100));
-              return (
-                <div key={tool.id} style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  padding: '0.75rem 1rem',
-                  background: 'rgba(0, 0, 0, 0.3)',
-                  border: '1px solid var(--border-subtle)',
-                  borderRadius: '8px',
-                  fontSize: '0.85rem'
-                }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                    <span style={{ fontWeight: 700, color: '#fff' }}>{tool.name}</span>
-                    <span style={{ fontSize: '0.7rem', padding: '0.15rem 0.5rem', background: 'rgba(37, 99, 235, 0.15)', color: '#38bdf8', borderRadius: '4px' }}>
-                      {tool.category}
-                    </span>
-                  </div>
-
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-                    <span style={{ color: 'var(--text-muted)' }}>${tool.monthlyCost}/mo</span>
-                    <div style={{ width: '100px', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <div style={{ flex: 1, height: '5px', background: 'rgba(255,255,255,0.1)', borderRadius: '999px', overflow: 'hidden' }}>
-                        <div style={{ width: `${percent}%`, height: '100%', background: '#2563eb' }}></div>
-                      </div>
-                      <span style={{ fontSize: '0.75rem', color: '#fff', fontVariantNumeric: 'tabular-nums' }}>{percent}%</span>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
+        {/* 3D CYBER SECURITY ECOSYSTEM ANIMATION & VIDEO REEL */}
+        <CyberShowcase
+          tools={tools}
+          totalMonthlySpend={totalMonthlySpend}
+          assignedSeats={assignedSeats}
+          totalSeats={totalSeats}
+          setActivePage={setActivePage}
+        />
       </section>
 
       {/* PILLARS / KEY FEATURES */}

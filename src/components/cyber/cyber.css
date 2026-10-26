@@ -1,0 +1,524 @@
+/* ==========================================================================
+   CYBER SECURITY ECOSYSTEM - 3D ANIMATION & CINEMATIC VIDEO SYSTEM
+   Inspired by Michael Skripin's Cyber Security Ecosystem (Houdini / Zajno)
+   Palette: Kevlar (Obsidian Slate), Chrome (Silver), Flare (Cyan / Emerald / Violet)
+   ========================================================================== */
+
+.cyber-showcase-container {
+  width: 100%;
+  position: relative;
+  border-radius: 16px;
+  background: radial-gradient(circle at 50% 20%, rgba(14, 165, 233, 0.08) 0%, rgba(8, 12, 21, 0.95) 70%);
+  border: 1px solid rgba(56, 189, 248, 0.22);
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.8),
+              0 0 30px -5px rgba(14, 165, 233, 0.15),
+              inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  margin-top: 1.5rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cyber-showcase-container:hover {
+  border-color: rgba(56, 189, 248, 0.38);
+  box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.85),
+              0 0 45px -5px rgba(14, 165, 233, 0.25),
+              inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* Cyber Window Header Bar */
+.cyber-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.25rem;
+  background: rgba(13, 19, 34, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.cyber-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.cyber-status-pulse {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.2rem 0.55rem;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #34d399;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.cyber-pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+  animation: cyber-beacon 1.8s infinite;
+}
+
+@keyframes cyber-beacon {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  50% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 14px #34d399; }
+  100% { transform: scale(0.9); opacity: 0.7; }
+}
+
+.cyber-header-title {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #e2e8f0;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: monospace;
+}
+
+/* Mode Switcher Tabs */
+.cyber-tabs {
+  display: flex;
+  align-items: center;
+  background: rgba(8, 12, 21, 0.75);
+  padding: 0.25rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  gap: 0.25rem;
+}
+
+.cyber-tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #94a3b8;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.cyber-tab-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.cyber-tab-btn.active {
+  color: #ffffff;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.35) 0%, rgba(14, 165, 233, 0.35) 100%);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  box-shadow: 0 2px 8px rgba(14, 165, 233, 0.2);
+}
+
+/* Actions in Header */
+.cyber-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cyber-btn-cinema {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.85rem;
+  background: linear-gradient(135deg, #2563eb, #0ea5e9);
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 0 15px rgba(14, 165, 233, 0.3);
+}
+
+.cyber-btn-cinema:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 22px rgba(14, 165, 233, 0.5);
+  filter: brightness(1.1);
+}
+
+/* 3D Canvas Viewport */
+.cyber-viewport {
+  position: relative;
+  width: 100%;
+  height: 520px;
+  background: #060911;
+  overflow: hidden;
+  cursor: grab;
+}
+
+.cyber-viewport:active {
+  cursor: grabbing;
+}
+
+.cyber-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* HUD Overlay Elements */
+.cyber-hud-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.cyber-hud-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.cyber-telemetry-panel {
+  background: rgba(10, 15, 29, 0.75);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-family: monospace;
+  font-size: 0.72rem;
+  color: #94a3b8;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  pointer-events: auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.cyber-telemetry-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+}
+
+.cyber-telemetry-val {
+  font-weight: 700;
+  color: #38bdf8;
+}
+
+.cyber-telemetry-val.secure {
+  color: #34d399;
+}
+
+/* Tactical Corner Brackets */
+.cyber-corner {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-color: rgba(56, 189, 248, 0.6);
+  pointer-events: none;
+}
+.cyber-corner.top-left {
+  top: 12px;
+  left: 12px;
+  border-top: 2px solid;
+  border-left: 2px solid;
+}
+.cyber-corner.top-right {
+  top: 12px;
+  right: 12px;
+  border-top: 2px solid;
+  border-right: 2px solid;
+}
+.cyber-corner.bottom-left {
+  bottom: 12px;
+  left: 12px;
+  border-bottom: 2px solid;
+  border-left: 2px solid;
+}
+.cyber-corner.bottom-right {
+  bottom: 12px;
+  right: 12px;
+  border-bottom: 2px solid;
+  border-right: 2px solid;
+}
+
+/* HUD Controls Bar on Canvas */
+.cyber-hud-controls {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.5rem 1rem;
+  background: rgba(10, 15, 29, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: 9999px;
+  align-self: center;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  flex-wrap: wrap;
+}
+
+.cyber-hud-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: #cbd5e1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cyber-hud-btn:hover {
+  background: rgba(37, 99, 235, 0.25);
+  border-color: rgba(56, 189, 248, 0.4);
+  color: #ffffff;
+}
+
+.cyber-hud-btn.active {
+  background: rgba(14, 165, 233, 0.25);
+  border-color: #38bdf8;
+  color: #38bdf8;
+}
+
+/* Scanline Effect */
+.cyber-scanlines {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.25) 50%
+  ), linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 0.03),
+    rgba(0, 255, 0, 0.01),
+    rgba(0, 0, 255, 0.03)
+  );
+  background-size: 100% 3px, 6px 100%;
+  pointer-events: none;
+  opacity: 0.4;
+  z-index: 2;
+}
+
+/* Video Player Styling */
+.cyber-video-wrapper {
+  position: relative;
+  width: 100%;
+  height: 520px;
+  background: #030712;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cyber-video-elem {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cyber-video-controls-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem 1.25rem;
+  background: linear-gradient(to top, rgba(3, 7, 18, 0.95) 0%, rgba(3, 7, 18, 0.5) 70%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  z-index: 10;
+}
+
+.cyber-progress-container {
+  width: 100%;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.cyber-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #2563eb, #38bdf8, #10b981);
+  border-radius: 9999px;
+  box-shadow: 0 0 10px #38bdf8;
+  transition: width 0.1s linear;
+}
+
+.cyber-video-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cyber-video-btn-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.cyber-video-icon-btn {
+  background: transparent;
+  border: none;
+  color: #e2e8f0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.cyber-video-icon-btn:hover {
+  color: #38bdf8;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Modal Overlay for Cinema View */
+.cyber-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 7, 18, 0.88);
+  backdrop-filter: blur(16px);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  animation: cyber-fade-in 0.25s ease-out;
+}
+
+@keyframes cyber-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.cyber-modal-card {
+  width: 100%;
+  max-width: 1080px;
+  background: #090e1a;
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  border-radius: 16px;
+  box-shadow: 0 30px 80px -15px rgba(0, 0, 0, 0.9),
+              0 0 60px -10px rgba(14, 165, 233, 0.3);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.cyber-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background: rgba(13, 19, 34, 0.9);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cyber-modal-close-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #cbd5e1;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cyber-modal-close-btn:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+.cyber-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1.5rem;
+  background: rgba(8, 12, 21, 0.95);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.78rem;
+  color: #64748b;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.cyber-credits {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: #94a3b8;
+}
+
+.cyber-credits a {
+  color: #38bdf8;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.cyber-credits a:hover {
+  text-decoration: underline;
+}
+
+/* Source Switcher Dropdown */
+.cyber-source-selector {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.74rem;
+  color: #94a3b8;
+}
+
+.cyber-source-select {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: #38bdf8;
+  font-size: 0.74rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .cyber-viewport,
+  .cyber-video-wrapper {
+    height: 380px;
+  }
+  .cyber-header-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .cyber-tabs {
+    width: 100%;
+    overflow-x: auto;
+  }
+}

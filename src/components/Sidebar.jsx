@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-import { 
-  Layers, 
-  Home, 
-  LayoutDashboard, 
-  Plus, 
-  Download, 
-  RotateCcw, 
-  LogIn, 
-  UserPlus, 
-  LogOut, 
-  ChevronLeft, 
-  ChevronRight, 
-  Menu, 
+import {
+  Layers,
+  Home,
+  LayoutDashboard,
+  Plus,
+  Download,
+  RotateCcw,
+  LogIn,
+  UserPlus,
+  LogOut,
+  ChevronLeft,
+  ChevronRight,
+  Menu,
   X,
   Sparkles,
   ShieldCheck
@@ -49,8 +49,8 @@ export default function Sidebar({
     <>
       {/* Mobile Top Bar with Hamburger Toggle */}
       <div className="mobile-top-bar">
-        <button 
-          onClick={() => setIsMobileOpen(!isMobileOpen)} 
+        <button
+          onClick={() => setIsMobileOpen(!isMobileOpen)}
           className="mobile-menu-btn"
           aria-label="Toggle Navigation Menu"
         >
@@ -66,9 +66,9 @@ export default function Sidebar({
           </span>
         </div>
 
-        <button 
-          onClick={onOpenAddModal} 
-          className="btn-primary" 
+        <button
+          onClick={onOpenAddModal}
+          className="btn-primary"
           style={{ padding: '0.4rem 0.65rem', fontSize: '0.78rem' }}
         >
           <Plus size={14} />
@@ -77,8 +77,8 @@ export default function Sidebar({
 
       {/* Backdrop for Mobile Drawer */}
       {isMobileOpen && (
-        <div 
-          className="sidebar-backdrop" 
+        <div
+          className="sidebar-backdrop"
           onClick={() => setIsMobileOpen(false)}
         />
       )}
@@ -87,8 +87,8 @@ export default function Sidebar({
       <aside className={`app-sidebar ${isCollapsed ? 'collapsed' : ''} ${isMobileOpen ? 'mobile-open' : ''}`}>
         {/* Brand Header */}
         <div className="sidebar-header">
-          <button 
-            onClick={() => handleNavClick('home')} 
+          <button
+            onClick={() => handleNavClick('home')}
             className="brand-logo-btn"
             title="LicenseGrid Home"
           >
@@ -131,6 +131,28 @@ export default function Sidebar({
                 <Home size={18} />
               </div>
               {!isCollapsed && <span className="nav-item-label">Home Overview</span>}
+            </button>
+
+            <button
+              onClick={() => {
+                handleNavClick('home');
+                setTimeout(() => {
+                  const el = document.getElementById('tab-3d-ecosystem');
+                  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+              }}
+              className="sidebar-nav-item"
+              title="3D Cyber Security Ecosystem"
+            >
+              <div className="nav-item-icon">
+                <ShieldCheck size={18} style={{ color: '#38bdf8' }} />
+              </div>
+              {!isCollapsed && (
+                <div className="nav-item-label-row">
+                  <span className="nav-item-label">License Tracker</span>
+                  <span className="nav-badge-pill" style={{ background: 'rgba(14, 165, 233, 0.2)', color: '#38bdf8', border: '1px solid rgba(56, 189, 248, 0.3)' }}>3D</span>
+                </div>
+              )}
             </button>
 
             <button
@@ -198,9 +220,9 @@ export default function Sidebar({
               <p style={{ fontSize: '0.74rem', color: 'var(--text-secondary)', margin: '0.35rem 0 0.65rem', lineHeight: 1.4 }}>
                 Instant admin access to test adding & revoking seats.
               </p>
-              <button 
-                onClick={onQuickDemo} 
-                className="btn-primary" 
+              <button
+                onClick={onQuickDemo}
+                className="btn-primary"
                 style={{ width: '100%', padding: '0.45rem', fontSize: '0.78rem' }}
               >
                 <span>Demo Admin Login</span>
